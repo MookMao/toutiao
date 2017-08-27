@@ -1,0 +1,51 @@
+<html>
+<body>
+<pre>
+    Hello VM.
+
+    $!{value1}
+    $!{value2}
+    ${value3}
+
+    #foreach($color in $colors)
+        Color $!{foreach.index}/$!{foreach.count}: $!{color}
+    #end
+
+    #foreach($key in $map.keySet())
+        Number $!{foreach.index}/$!{foreach.count}: $!{key} $map.get($!{key})
+    #end
+
+    #foreach($kv in $map.entrySet())
+        Number $!{foreach.index}/$!{foreach.count}: $!{kv.key} $!{kv.value}
+    #end
+
+    User:$!{user.name}
+    User:$!{user.getName()}
+
+##    定义变量
+    #set($title = "coder")
+##    纯文本扩展
+    Include: #include("header.vm") <br>
+##    变量解析
+    Parse:#parse("header.vm")
+
+##    在Velocity中也有宏的概念，可以将其作为函数来理解，使用#macro声明宏
+    #macro (render_color $color, $index)
+        Color By Macro $index, $color
+    #end
+
+    #foreach ($color in $colors)
+        #render_color($color, $foreach.index)
+    #end
+
+    #set($hello = "hello")
+    #set($hworld1 = "$!{hello} world") ##对双引号里面的内容进行解析
+    #set($hworld2 = '$!{hello} world') ##单引号里面的内容不会解析,原样输出
+
+    $!{colors.size()}
+
+    hworld1:$hworld1
+    hworld2:$hworld2
+</pre>
+</body>
+</html>
